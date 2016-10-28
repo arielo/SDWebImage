@@ -21,7 +21,8 @@
     UIImage *image;
     NSString *imageContentType = [NSData sd_contentTypeForImageData:data];
     if ([imageContentType isEqualToString:@"image/gif"]) {
-        image = [UIImage sd_animatedGIFWithData:data];
+        // NOTE: Manually overriding to avoid animated GIFs and their known performance problems. SDWebImage 4.0 should have a fix for this.
+        image = [[UIImage alloc] initWithData:data]; // [UIImage sd_animatedGIFWithData:data];
     }
 #ifdef SD_WEBP
     else if ([imageContentType isEqualToString:@"image/webp"])
